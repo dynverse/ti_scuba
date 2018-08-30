@@ -1,6 +1,6 @@
 FROM dynverse/dynwrap:py3.6
 
-LABEL version 0.1.0.1
+LABEL version 0.1.0
 
 # install R before rpy2
 RUN apt-get update && apt-get install -y r-base
@@ -17,4 +17,4 @@ RUN R -e 'devtools::install_github("dynverse/princurve@69b85ad4709b15e5b40f8541f
 
 ADD . /code
 
-ENTRYPOINT /code/run.sh
+ENTRYPOINT python /code/run.py

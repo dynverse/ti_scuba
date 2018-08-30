@@ -1,5 +1,3 @@
-#!/usr/local/bin/python
-
 import PySCUBA
 import json
 import sys
