@@ -12,6 +12,7 @@ From: dynverse/dynwrap:py3.6
 
 %post
     chmod -R a+r /code
+    chmod a+x /code
     apt-get update && apt-get install -y r-base
     pip install rpy2
     pip install jinja2
