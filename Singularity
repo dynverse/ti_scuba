@@ -8,9 +8,10 @@ Bootstrap: shub
 From: dynverse/dynwrap:py3.6
 
 %labels
-    version 0.1.0
+    version 0.1.1
 
 %post
+    chmod -R a+r /code
     apt-get update && apt-get install -y r-base
     pip install rpy2
     pip install jinja2

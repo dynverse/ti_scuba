@@ -1,6 +1,6 @@
 FROM dynverse/dynwrap:py3.6
 
-LABEL version 0.1.0
+LABEL version 0.1.1
 
 # install R before rpy2
 RUN apt-get update && apt-get install -y r-base
