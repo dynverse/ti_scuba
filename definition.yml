@@ -1,5 +1,6 @@
 id: scuba
 docker_repository: dynverse/ti_scuba
+singularity_collection: 1577
 container_url: https://github.com/dynverse/ti_scuba
 name: SCUBA
 type: algorithm
