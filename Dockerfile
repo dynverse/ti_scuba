@@ -1,7 +1,5 @@
 FROM dynverse/dynwrap:py3.6
 
-LABEL version 0.1.2
-
 # install R before rpy2
 RUN apt-get update && apt-get install -y r-base
 
@@ -14,6 +12,8 @@ RUN pip install git+https://github.com/dynverse/PySCUBA.git --upgrade --no-depen
 # install legacy princurve for now
 RUN R -e 'install.packages("devtools", repos = "http://cran.us.r-project.org")'
 RUN R -e 'devtools::install_github("dynverse/princurve@69b85ad4709b15e5b40f8541f4b5e2ca9059be3a")'
+
+LABEL version 0.1.2
 
 ADD . /code
 
