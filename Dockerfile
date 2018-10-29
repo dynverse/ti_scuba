@@ -13,7 +13,7 @@ RUN pip install git+https://github.com/dynverse/PySCUBA.git --upgrade --no-depen
 RUN R -e 'install.packages("devtools", repos = "http://cran.us.r-project.org")'
 RUN R -e 'devtools::install_github("dynverse/princurve@69b85ad4709b15e5b40f8541f4b5e2ca9059be3a")'
 
-LABEL version 0.1.2
+LABEL version 0.1.4
 
 ADD . /code
 
