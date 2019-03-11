@@ -33,14 +33,15 @@ checkpoints["method_afterpreproc"] = time.time()
 
 #   ____________________________________________________________________________
 #   Infer trajectory                                                        ####
-cpseudotime_mode = timecourse_discrete is None
-ell_IDs, data, markers, cell_stages, data_tag, output_directory = PySCUBA.Preprocessing.RNASeq_preprocess(
-  "/txpression.tsv",
-  pseudotime_mode = Tpseudotime_mod,
+pseudotime_mode = timecourse_discrete is None
+cell_IDs, data, markers, cell_stages, data_tag, output_directory = PySCUBA.Preprocessing.RNASeq_preprocess(
+  "/expression.tsv",
+  pseudotime_mode = pseudotime_mod,
   log_mode = False,
   N_dim = p["N_dim"],
   low_gene_threshold = p["low_gene_threshold"],
-  low_gene_fraction_max = p["low_gene_fraction_max"])
+  low_gene_fraction_max = p["low_gene_fraction_max"]
+)
 
 if timecourse_discrete is not None:
   cell_stages = timecourse_discrete
@@ -58,7 +59,7 @@ centroid_coordinates, cluster_indices, parent_clusters, new_tree = PySCUBA.refin
   cluster_indices,
   parent_clusters,
   cell_stages,
-  output_directory="/t)
+  output_directory="/")
 
 checkpoints["method_aftermethod"] = time.time()
 
