@@ -1,11 +1,11 @@
 #!/usr/local/bin/python
 
 import dynclipy
-# task = dynclipy.main()
-task = dynclipy.main(
-  ["--dataset", "/code/example.h5", "--output", "/mnt/output"],
-  "/code/definition.yml"
-)
+task = dynclipy.main()
+# task = dynclipy.main(
+#   ["--dataset", "/code/example.h5", "--output", "/mnt/output"],
+#   "/code/definition.yml"
+# )
 
 import PySCUBA
 import json
