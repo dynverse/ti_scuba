@@ -1,10 +1,10 @@
 #!/usr/local/bin/Rscript
 
 # generate dataset with certain seed
-set.seed(2)
+set.seed(1)
 data <- dyntoy::generate_dataset(
   id = "specific_example/paga",
-  num_cells = 99,
+  num_cells = 100,
   num_features = 101,
   model = "multifurcating"
 )
