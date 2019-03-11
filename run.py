@@ -66,8 +66,7 @@ checkpoints["method_aftermethod"] = time.time()
 #   ____________________________________________________________________________
 #   Process & save output                                                   ####
 #
- grouping
-grouping = pd.DataFrame({
+ rouping = pd.DataFrame({
   "cell_id": expression.index,
   "group_id": cluster_indices.astype(str)
 })
