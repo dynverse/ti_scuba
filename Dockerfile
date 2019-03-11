@@ -1,5 +1,7 @@
 FROM dynverse/dynwrappy:v0.1.0
 
+ARG GITGUB_PAT
+
 # install scuba
 RUN pip install jinja2
 RUN pip install git+https://github.com/dynverse/PySCUBA.git # first install without upgrade of dependencies
