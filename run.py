@@ -14,6 +14,9 @@ checkpoints = {}
 expression = pd.read_csv("/ti/input/expression.csv", index_col = [0])
 p = json.load(open("/ti/input/params.json", "r"))
 
+if os.path.exists("/ti/input/timecourse_discrete.json"):
+  timecourse_discrete = json.load(open("/ti/input/timecourse_discrete.json"))
+
 expression.T.to_csv("/ti/input/expression.tsv", sep = "\t")
 
 checkpoints["method_afterpreproc"] = time.time()
@@ -27,6 +30,9 @@ cell_IDs, data, markers, cell_stages, data_tag, output_directory = PySCUBA.Prepr
   N_dim = p["N_dim"],
   low_gene_threshold = p["low_gene_threshold"],
   low_gene_fraction_max = p["low_gene_fraction_max"])
+
+if 'timecourse_discrete' in locals():
+  cell_stages = timecourse_discrete
 
 centroid_coordinates, cluster_indices, parent_clusters = PySCUBA.initialize_tree(
   data,
