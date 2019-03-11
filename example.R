@@ -1,7 +1,7 @@
 #!/usr/local/bin/Rscript
 
 # generate dataset with certain seed
-set.seed(1)
+set.seed(2)
 data <- dyntoy::generate_dataset(
   id = "specific_example/paga",
   num_cells = 99,
