@@ -1,6 +1,6 @@
 FROM dynverse/dynwrappy:v0.1.0
 
-ARG GITGUB_PAT
+ARG GITHUB_PAT
 
 # install scuba
 RUN pip install jinja2
