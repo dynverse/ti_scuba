@@ -66,14 +66,15 @@ checkpoints["method_aftermethod"] = time.time()
 #   ____________________________________________________________________________
 #   Process & save output                                                   ####
 #
- rouping = pd.DataFrame({
+grouping = pd.DataFrame({
   "cell_id": expression.index,
   "group_id": cluster_indices.astype(str)
 })
 
 # milestone_network
 
-tree_pd = pd.DataFrame(new_tree[1:,:], columns = new_tree[0,:])milestone_network = pd.DataFrame({
+tree_pd = pd.DataFrame(new_tree[1:,:], columns = new_tree[0,:])
+milestone_network = pd.DataFrame({
   "from": tree_pd["Parent cluster"].astype(np.double).astype(np.int).astype(str),
   "to": tree_pd["Cluster ID"].astype(np.double).astype(np.int).astype(str),
   "length": 1.0,
