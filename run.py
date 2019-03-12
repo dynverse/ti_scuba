@@ -26,8 +26,7 @@ p = task["params"]
 if "timecourse_discrete" in task["priors"]:
   timecourse_discrete = task["priors"]["timecourse_discrete"]
 
-# resave expression because SCUBA requires this (🙄)
-expression.T.to_csv("/txpression.tsv", sep = "\t")
+# resave expression because SCUBA requires thisexpression.T.to_csv("/txpression.tsv", sep = "\t")
 
 checkpoints["method_afterpreproc"] = time.time()
 
@@ -36,7 +35,7 @@ checkpoints["method_afterpreproc"] = time.time()
 pseudotime_mode = timecourse_discrete is None
 cell_IDs, data, markers, cell_stages, data_tag, output_directory = PySCUBA.Preprocessing.RNASeq_preprocess(
   "/expression.tsv",
-  pseudotime_mode = pseudotime_mod,
+  pseudotime_mode = pseudotime_mod,e
   log_mode = False,
   N_dim = p["N_dim"],
   low_gene_threshold = p["low_gene_threshold"],
