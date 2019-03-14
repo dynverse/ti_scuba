@@ -35,12 +35,8 @@ wrapper:
   - multifurcation
   - binary_tree
   - tree
-  example: example.R
-  input_required:
-  - expression
-  input_optional:
-  - timecourse_discrete
-
+  input_required: expression
+  input_optional: timecourse_discrete
 
 parameters:
   - id: rigorous_gap_stats
