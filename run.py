@@ -21,7 +21,7 @@ checkpoints = {}
 #   Load data                                                               ####
 
 expression = task["expression"]
-p = task["params"]
+p = task["parameters"]
 
 if "timecourse_discrete" in task["priors"]:
   timecourse_discrete = task["priors"]["timecourse_discrete"]
