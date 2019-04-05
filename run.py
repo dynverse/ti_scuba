@@ -1,3 +1,12 @@
+#!/usr/local/bin/python
+
+import dynclipy
+task = dynclipy.main()
+# task = dynclipy.main(
+#   ["--dataset", "/code/example.h5", "--output", "/mnt/output"],
+#   "/code/definition.yml"
+# )
+
 import PySCUBA
 import json
 import sys
@@ -11,22 +20,31 @@ checkpoints = {}
 #   ____________________________________________________________________________
 #   Load data                                                               ####
 
-expression = pd.read_csv("/ti/input/expression.csv", index_col = [0])
-p = json.load(open("/ti/input/params.json", "r"))
+expression = task["expression"]
+p = task["parameters"]
 
-expression.T.to_csv("/ti/input/expression.tsv", sep = "\t")
+if "timecourse_discrete" in task["priors"]:
+  timecourse_discrete = task["priors"]["timecourse_discrete"]
+
+# resave expression because SCUBA requires this
+expression.T.to_csv("/expression.tsv", sep = "\t")
 
 checkpoints["method_afterpreproc"] = time.time()
 
 #   ____________________________________________________________________________
 #   Infer trajectory                                                        ####
+pseudotime_mode = timecourse_discrete is None
 cell_IDs, data, markers, cell_stages, data_tag, output_directory = PySCUBA.Preprocessing.RNASeq_preprocess(
-  "/ti/input/expression.tsv",
-  pseudotime_mode = True,
+  "/expression.tsv",
+  pseudotime_mode = pseudotime_mode,
   log_mode = False,
   N_dim = p["N_dim"],
   low_gene_threshold = p["low_gene_threshold"],
-  low_gene_fraction_max = p["low_gene_fraction_max"])
+  low_gene_fraction_max = p["low_gene_fraction_max"]
+)
+
+if timecourse_discrete is not None:
+  cell_stages = timecourse_discrete
 
 centroid_coordinates, cluster_indices, parent_clusters = PySCUBA.initialize_tree(
   data,
@@ -41,28 +59,21 @@ centroid_coordinates, cluster_indices, parent_clusters, new_tree = PySCUBA.refin
   cluster_indices,
   parent_clusters,
   cell_stages,
-  output_directory="/ti/workspace")
+  output_directory="/")
 
 checkpoints["method_aftermethod"] = time.time()
 
 #   ____________________________________________________________________________
 #   Process & save output                                                   ####
-cell_ids = pd.DataFrame({
-  "cell_ids": expression.index
-})
-cell_ids.to_csv("/ti/output/cell_ids.csv", index=False)
-
-# grouping
+#
 grouping = pd.DataFrame({
   "cell_id": expression.index,
   "group_id": cluster_indices.astype(str)
 })
-grouping.to_csv("/ti/output/grouping.csv", index=False)
 
 # milestone_network
 
 tree_pd = pd.DataFrame(new_tree[1:,:], columns = new_tree[0,:])
-
 milestone_network = pd.DataFrame({
   "from": tree_pd["Parent cluster"].astype(np.double).astype(np.int).astype(str),
   "to": tree_pd["Cluster ID"].astype(np.double).astype(np.int).astype(str),
@@ -70,7 +81,11 @@ milestone_network = pd.DataFrame({
   "directed": True
 })
 
-milestone_network.to_csv("/ti/output/milestone_network.csv", index=False)
-
-# timings
-json.dump(checkpoints, open("/ti/output/timings.json", "w"))
+# save
+dataset = dynclipy.wrap_data(cell_ids = expression.index)
+dataset.add_cluster_graph(
+  grouping = grouping,
+  milestone_network = milestone_network
+)
+dataset.add_timings(timings = checkpoints)
+dataset.write_output(task["output"])
