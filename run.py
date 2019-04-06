@@ -25,6 +25,8 @@ p = task["parameters"]
 
 if "timecourse_discrete" in task["priors"]:
   timecourse_discrete = task["priors"]["timecourse_discrete"]
+else:
+  timecourse_discrete = None
 
 # resave expression because SCUBA requires this
 expression.T.to_csv("/expression.tsv", sep = "\t")
